@@ -15,8 +15,13 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nathansass.nooze.R;
+import com.nathansass.nooze.models.Article;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -25,6 +30,8 @@ public class SearchActivity extends AppCompatActivity {
     EditText etQuery;
     GridView gvResults;
     Button btnSearch;
+
+    ArrayList<Article> articles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,8 @@ public class SearchActivity extends AppCompatActivity {
         etQuery = (EditText) findViewById(R.id.etQuery);
         gvResults = (GridView) findViewById(R.id.gvResults);
         btnSearch = (Button) findViewById(R.id.btnSearch);
+
+        articles = new ArrayList<>();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,15 +86,23 @@ public class SearchActivity extends AppCompatActivity {
 
         client.get(url, params, new JsonHttpResponseHandler() {
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-//                super.onFailure(statusCode, headers, throwable, errorResponse);
-                Log.d("DEBUG", "noooooo");
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.d("DEBUG", response.toString());
+                JSONArray jsonArticleResults = null;
+                try {
+                    jsonArticleResults = response.getJSONObject("response").getJSONArray("docs");
+                    articles.addAll(Article.fromJsonArray(jsonArticleResults));
+                    Log.d("DEBUG", articles.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("DEBUG", response.toString());
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                //TODO: handle failure
+                Log.d("DEBUG", "noooooo");
             }
         });
 

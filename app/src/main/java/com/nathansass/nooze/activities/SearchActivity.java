@@ -15,6 +15,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nathansass.nooze.R;
+import com.nathansass.nooze.adapters.ArticleArrayAdapter;
 import com.nathansass.nooze.models.Article;
 
 import org.json.JSONArray;
@@ -32,6 +33,7 @@ public class SearchActivity extends AppCompatActivity {
     Button btnSearch;
 
     ArrayList<Article> articles;
+    ArticleArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class SearchActivity extends AppCompatActivity {
         btnSearch = (Button) findViewById(R.id.btnSearch);
 
         articles = new ArrayList<>();
+        adapter = new ArticleArrayAdapter(this, articles);
+        gvResults.setAdapter(adapter);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,8 +95,9 @@ public class SearchActivity extends AppCompatActivity {
                 JSONArray jsonArticleResults = null;
                 try {
                     jsonArticleResults = response.getJSONObject("response").getJSONArray("docs");
-                    articles.addAll(Article.fromJsonArray(jsonArticleResults));
-                    Log.d("DEBUG", articles.toString());
+                    adapter.addAll(Article.fromJsonArray(jsonArticleResults));
+
+//                    Log.d("DEBUG", articles.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

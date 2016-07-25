@@ -41,5 +41,5 @@
         android:id="@+id/gvResults"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/etQuery"
-        />
+        android:numColumns="4"/>
 </RelativeLayout>

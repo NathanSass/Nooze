@@ -13,21 +13,126 @@
     tools:context="com.nathansass.nooze.activities.SettingsActivity"
     tools:showIn="@layout/activity_settings">
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Settings"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Begin Date"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/btnSave"
+        android:layout_alignRight="@+id/btnSave"
+        android:layout_alignEnd="@+id/btnSave"
+        android:inputType="date"/>
+
+    <!--             -->
+    <!--BUTTON GROUP -->
+    <!-- Question best way to have a horizontal wrapping layout-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Sort By"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/editText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+    <Button
+            style="@style/SortButton"
+            android:text="Arts"
+            android:id="@+id/btnArts"
+            android:layout_below="@+id/textView2"
+            android:layout_alignParentLeft="true"/>
+
+    <Button
+            style="@style/SortButton"
+            android:text="Fashion"
+            android:id="@+id/btnFashion"
+            android:layout_below="@+id/textView2"
+            android:layout_toRightOf="@+id/btnArts"
+            android:layout_toEndOf="@+id/btnArts"/>
+
+    <Button
+            style="@style/SortButton"
+            android:text="Sports"
+            android:id="@+id/btnSports"
+            android:layout_alignBottom="@+id/btnFashion"
+            android:layout_toRightOf="@+id/btnFashion"
+            android:layout_toEndOf="@+id/btnFashion"/>
+
+    <Button
+            style="@style/SortButton"
+            android:text="Politics"
+            android:id="@+id/btnPolitics"
+            android:layout_below="@+id/btnArts"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+    <Button
+            style="@style/SortButton"
+            android:text="Tech"
+            android:id="@+id/btnTech"
+            android:layout_alignTop="@+id/btnHealth"
+            android:layout_toRightOf="@+id/btnArts"
+            android:layout_toEndOf="@+id/btnArts"/>
+
+    <Button
+            style="@style/SortButton"
+            android:text="Health"
+            android:id="@+id/btnHealth"
+            android:layout_below="@+id/btnSports"
+            android:layout_alignLeft="@+id/btnSports"
+            android:layout_alignStart="@+id/btnSports"/>
+    <!--BUTTON GROUP END-->
+    <!--                -->
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Order By"
+        android:id="@+id/tvOrderBy"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_below="@id/btnHealth"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvOrderBy"
+                android:orientation="horizontal">
+        <RadioButton android:id="@+id/rbOldest"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Oldest" />
+        <RadioButton android:id="@+id/rbNewest"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                     android:text="Newest" />
+    </RadioGroup>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
         android:id="@+id/btnSave"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="110dp"/>
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="85dp"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

@@ -19,6 +19,7 @@ import com.loopj.android.http.RequestParams;
 import com.nathansass.nooze.R;
 import com.nathansass.nooze.adapters.ArticleArrayAdapter;
 import com.nathansass.nooze.models.Article;
+import com.nathansass.nooze.models.Settings;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,12 +38,18 @@ public class SearchActivity extends AppCompatActivity {
     ArrayList<Article> articles;
     ArticleArrayAdapter adapter;
 
+    Settings settings;
+
+    private final int REQUEST_CODE = 99;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        settings = new Settings();
 
         setUpViews();
 
@@ -90,12 +97,25 @@ public class SearchActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
 //            Toast.makeText(this, "settings clicked", Toast.LENGTH_LONG).show();
             Intent i = new Intent(SearchActivity.this, SettingsActivity.class);
-            startActivity(i);
+            startActivityForResult(i, REQUEST_CODE);
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+
+            // Extract name value from result extras
+            settings = (Settings) data.getExtras().get("settings");
+            int code = data.getExtras().getInt("code", 0);
+
+            // redo the search with the settings object
+
+        }
     }
 
     public void onArticleSearch(View view) {
@@ -130,7 +150,5 @@ public class SearchActivity extends AppCompatActivity {
                 Log.d("DEBUG", "noooooo");
             }
         });
-
-        //Toast.makeText(this, "Searching for: " + query, Toast.LENGTH_LONG).show();
     }
 }

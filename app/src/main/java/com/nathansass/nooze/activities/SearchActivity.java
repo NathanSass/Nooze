@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -95,7 +96,6 @@ public class SearchActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-//            Toast.makeText(this, "settings clicked", Toast.LENGTH_LONG).show();
             Intent i = new Intent(SearchActivity.this, SettingsActivity.class);
             startActivityForResult(i, REQUEST_CODE);
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
@@ -113,12 +113,12 @@ public class SearchActivity extends AppCompatActivity {
             settings = (Settings) data.getExtras().get("settings");
             int code = data.getExtras().getInt("code", 0);
 
-            // redo the search with the settings object
+            onArticleSearch(getWindow().getDecorView().getRootView());
 
         }
     }
 
-    public void onArticleSearch(View view) {
+    public void onArticleSearch(View view) { // What if I just want to call this
         String query = etQuery.getText().toString();
 
         AsyncHttpClient client = new AsyncHttpClient();
@@ -127,14 +127,30 @@ public class SearchActivity extends AppCompatActivity {
         RequestParams params = new RequestParams();
         params.put("api-key", "1c1bd6892f7e49668dd62865cba5b5f8");
         params.put("page", 0);
-        params.put("q", query);
+
+        if (query.length() > 0) {
+            params.put("q", query);
+        }
+
+        if (settings.getNewsCategories().length() > 0) {
+            params.put("fq", settings.getNewsCategories());
+        }
+
+        if (settings.getBeginDate().length() > 0) {
+            params.put("begin_date", settings.getBeginDate());
+        }
+
+        if (settings.sortBy != null) {
+            params.put("sort", settings.sortBy);
+        }
+
 
         client.get(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("DEBUG", response.toString());
                 JSONArray jsonArticleResults = null;
                 try {
+                    adapter.clear();
                     jsonArticleResults = response.getJSONObject("response").getJSONArray("docs");
                     adapter.addAll(Article.fromJsonArray(jsonArticleResults));
 
@@ -147,7 +163,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 //TODO: handle failure
-                Log.d("DEBUG", "noooooo");
+                Toast.makeText(getApplication(), "Failure connecting with NYTimes", Toast.LENGTH_SHORT).show();
+                Log.d("DEBUG", "Failure: " + errorResponse.toString());
             }
         });
     }

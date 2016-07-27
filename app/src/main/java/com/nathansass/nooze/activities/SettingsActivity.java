@@ -63,11 +63,11 @@ public class SettingsActivity extends AppCompatActivity implements DatePickerDia
     @OnClick({R.id.rbNewest, R.id.rbOldest, R.id.rbNoSort})
     public void onRadioButtonClick(RadioButton radioButton) {
         if (radioButton.getId() == R.id.rbOldest) {
-            settings.sortNewest = false;
+            settings.sortBy = "oldest";
         } else if (radioButton.getId() == R.id.rbNewest) {
-            settings.sortNewest = true;
+            settings.sortBy = "newest";
         } else if (radioButton.getId() == R.id.rbNoSort) {
-            settings.sortNewest = null;
+            settings.sortBy = null;
         }
     }
 

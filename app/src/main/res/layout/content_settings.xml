@@ -34,6 +34,7 @@
         android:layout_toStartOf="@+id/btnSave"
         android:layout_alignRight="@+id/btnSave"
         android:layout_alignEnd="@+id/btnSave"
+        android:cursorVisible="false"
         android:inputType="date"/>
 
     <!--             -->

@@ -19,6 +19,7 @@ import java.util.List;
  * Created by nathansass on 7/25/16.
  */
 public class ArticleArrayAdapter extends ArrayAdapter<Article> {
+
     public ArticleArrayAdapter(Context context, List<Article> articles) {
         super(context, android.R.layout.simple_list_item_1, articles);
     }
@@ -40,8 +41,11 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
         imageView.setImageResource(0);
 
         TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
+        ImageView clockIcon = (ImageView) convertView.findViewById(R.id.clockIcon);
+        TextView tvDaysOld = (TextView) convertView.findViewById(R.id.tvDaysOld);
 
         tvTitle.setText(article.getHeadline());
+        tvDaysOld.setText(article.getAgeOfArticleInDays() + " Days Old");
 
         // populate the thumbnail image
         // remotely download the image in background

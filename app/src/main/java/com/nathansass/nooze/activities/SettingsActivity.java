@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnFocusChange;
 
 public class SettingsActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     @BindView(R.id.etBeginDatePicker)
@@ -87,7 +86,7 @@ public class SettingsActivity extends AppCompatActivity implements DatePickerDia
         }
     }
 
-    @OnFocusChange(R.id.etBeginDatePicker)
+//    @OnFocusChange(R.id.etBeginDatePicker)
     @OnClick(R.id.etBeginDatePicker)
     public void openBeginDatePicker() {
         DatePickerFragment newFragment = new DatePickerFragment();

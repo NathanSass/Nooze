@@ -3,15 +3,15 @@ package com.nathansass.nooze.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -21,6 +21,7 @@ import com.nathansass.nooze.R;
 import com.nathansass.nooze.adapters.ArticleArrayAdapter;
 import com.nathansass.nooze.models.Article;
 import com.nathansass.nooze.models.Settings;
+import com.nathansass.nooze.util.ItemClickSupport;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +34,8 @@ import cz.msebera.android.httpclient.Header;
 public class SearchActivity extends AppCompatActivity {
 
     EditText etQuery;
-    GridView gvResults;
+//    GridView gvResults;
+
     Button btnSearch;
 
     ArrayList<Article> articles;
@@ -58,28 +60,34 @@ public class SearchActivity extends AppCompatActivity {
 
     public void setUpViews() {
         etQuery = (EditText) findViewById(R.id.etQuery);
-        gvResults = (GridView) findViewById(R.id.gvResults);
+        RecyclerView articleRecycler = (RecyclerView) findViewById(R.id.rvResults);
+
+//        gvResults = (GridView) findViewById(R.id.gvResults);
         btnSearch = (Button) findViewById(R.id.btnSearch);
 
         articles = new ArrayList<>();
+
         adapter = new ArticleArrayAdapter(this, articles);
-        gvResults.setAdapter(adapter);
+        articleRecycler.setAdapter(adapter);
 
-        // Setup click listener for grid items
-        gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent( getApplicationContext(), ArticleActivity.class );
+        articleRecycler.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
 
-                Article article = articles.get(position);
+        ItemClickSupport.addTo(articleRecycler).setOnItemClickListener(
+                new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Intent i = new Intent( getApplicationContext(), ArticleActivity.class );
 
-                i.putExtra("article", article);
+                        Article article = articles.get(position);
 
-                startActivity(i);
+                        i.putExtra("article", article);
 
-            }
-        });
+                        startActivity(i);
+                    }
+                }
+        );
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -150,9 +158,12 @@ public class SearchActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 JSONArray jsonArticleResults = null;
                 try {
-                    adapter.clear();
+                    articles.clear();
+                    adapter.notifyDataSetChanged();
                     jsonArticleResults = response.getJSONObject("response").getJSONArray("docs");
-                    adapter.addAll(Article.fromJsonArray(jsonArticleResults));
+
+                    articles.addAll(Article.fromJsonArray(jsonArticleResults));
+                    adapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -1,17 +1,18 @@
 package com.nathansass.nooze.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -34,10 +35,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class SearchActivity extends AppCompatActivity {
 
-    EditText etQuery;
-//    GridView gvResults;
-
-    Button btnSearch;
+    Context context;
 
     ArrayList<Article> articles;
     ArticleArrayAdapter adapter;
@@ -47,6 +45,7 @@ public class SearchActivity extends AppCompatActivity {
     String previousSearch;
 
     int page = 1;
+    String query = "";
 
     private final int REQUEST_CODE = 99;
 
@@ -57,6 +56,7 @@ public class SearchActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        context = this;
 
         settings = new Settings();
 
@@ -66,10 +66,8 @@ public class SearchActivity extends AppCompatActivity {
 
     public void setUpViews() {
         previousSearch = "";
-        etQuery = (EditText) findViewById(R.id.etQuery);
-        RecyclerView articleRecycler = (RecyclerView) findViewById(R.id.rvResults);
 
-        btnSearch = (Button) findViewById(R.id.btnSearch);
+        RecyclerView articleRecycler = (RecyclerView) findViewById(R.id.rvResults);
 
         articles = new ArrayList<>();
 
@@ -107,6 +105,26 @@ public class SearchActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchView.clearFocus();
+                onArticleSearch(query);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+
         return true;
     }
 
@@ -136,13 +154,12 @@ public class SearchActivity extends AppCompatActivity {
             settings = (Settings) data.getExtras().get("settings");
             int code = data.getExtras().getInt("code", 0);
 
-            onArticleSearch(getWindow().getDecorView().getRootView());
+            onArticleSearch();
 
         }
     }
 
     public void onArticleEndlessSearch() {
-        String query = etQuery.getText().toString();
 
         if (previousSearch != query) {
             page = 1;
@@ -208,10 +225,11 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-
-    public void onArticleSearch(View view) { // What if I just want to call this
-        String query = etQuery.getText().toString();
-
+    public void onArticleSearch(String query) {
+        this.query = query;
+        onArticleSearch();
+    }
+    public void onArticleSearch() { // What if I just want to call this
         AsyncHttpClient client = new AsyncHttpClient();
         String url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
 

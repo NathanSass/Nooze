@@ -21,6 +21,7 @@ import com.nathansass.nooze.R;
 import com.nathansass.nooze.adapters.ArticleArrayAdapter;
 import com.nathansass.nooze.models.Article;
 import com.nathansass.nooze.models.Settings;
+import com.nathansass.nooze.util.EndlessRecyclerViewScrollListener;
 import com.nathansass.nooze.util.ItemClickSupport;
 
 import org.json.JSONArray;
@@ -43,6 +44,10 @@ public class SearchActivity extends AppCompatActivity {
 
     Settings settings;
 
+    String previousSearch;
+
+    int page = 1;
+
     private final int REQUEST_CODE = 99;
 
     @Override
@@ -59,10 +64,10 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void setUpViews() {
+        previousSearch = "";
         etQuery = (EditText) findViewById(R.id.etQuery);
         RecyclerView articleRecycler = (RecyclerView) findViewById(R.id.rvResults);
 
-//        gvResults = (GridView) findViewById(R.id.gvResults);
         btnSearch = (Button) findViewById(R.id.btnSearch);
 
         articles = new ArrayList<>();
@@ -70,7 +75,16 @@ public class SearchActivity extends AppCompatActivity {
         adapter = new ArticleArrayAdapter(this, articles);
         articleRecycler.setAdapter(adapter);
 
-        articleRecycler.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+        StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        articleRecycler.setLayoutManager(gridLayoutManager);
+
+        articleRecycler.addOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                onArticleEndlessSearch();
+                Toast.makeText(getApplication(), "load page: " + page, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         ItemClickSupport.addTo(articleRecycler).setOnItemClickListener(
                 new ItemClickSupport.OnItemClickListener() {
@@ -126,6 +140,74 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
+    public void onArticleEndlessSearch() {
+        String query = etQuery.getText().toString();
+
+        if (previousSearch != query) {
+            page = 1;
+        }
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        String url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+
+        RequestParams params = new RequestParams();
+        params.put("api-key", "1c1bd6892f7e49668dd62865cba5b5f8");
+        params.put("page", page);
+
+        page += 1;
+
+        if (query.length() > 0) {
+            params.put("q", query);
+        }
+
+        if (settings.getNewsCategories().length() > 0) {
+            params.put("fq", settings.getNewsCategories());
+        }
+
+        if (settings.getBeginDate().length() > 0) {
+            params.put("begin_date", settings.getBeginDate());
+        }
+
+        if (settings.sortBy != null) {
+            params.put("sort", settings.sortBy);
+        }
+
+
+        client.get(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                JSONArray jsonArticleResults = null;
+                try {
+
+                    int curSize = articles.size();
+
+//                    articles.clear();
+//                    adapter.notifyDataSetChanged();
+                    jsonArticleResults = response.getJSONObject("response").getJSONArray("docs");
+
+                    ArrayList<Article> newArticles = Article.fromJsonArray(jsonArticleResults);
+
+                    articles.addAll(newArticles);
+
+                    adapter.notifyItemRangeInserted(curSize, newArticles.size());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                //TODO: handle failure
+                Toast.makeText(getApplication(), "Failure connecting with NYTimes", Toast.LENGTH_SHORT).show();
+                Log.d("DEBUG", "Failure: " + errorResponse.toString());
+            }
+        });
+
+    }
+
+
     public void onArticleSearch(View view) { // What if I just want to call this
         String query = etQuery.getText().toString();
 
@@ -152,18 +234,17 @@ public class SearchActivity extends AppCompatActivity {
             params.put("sort", settings.sortBy);
         }
 
-
         client.get(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 JSONArray jsonArticleResults = null;
                 try {
                     articles.clear();
-                    adapter.notifyDataSetChanged();
                     jsonArticleResults = response.getJSONObject("response").getJSONArray("docs");
 
+                    ArrayList<Article> newArticles = Article.fromJsonArray(jsonArticleResults);
                     articles.addAll(Article.fromJsonArray(jsonArticleResults));
-                    adapter.notifyDataSetChanged();
+                    adapter.notifyItemRangeInserted(0, newArticles.size());
 
                 } catch (JSONException e) {
                     e.printStackTrace();

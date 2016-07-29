@@ -21,7 +21,13 @@ public class Article implements Serializable {
             this.webUrl = jsonObject.getString("web_url");
             this.headline = jsonObject.getJSONObject("headline").getString("main");
             JSONArray multimedia = jsonObject.getJSONArray("multimedia");
-            this.pubDate = new DateTime( jsonObject.getString("pub_date") );
+
+            String dateString = jsonObject.getString("pub_date");
+            if (dateString.equals("null")) {
+                this.pubDate = new DateTime();
+            } else {
+                this.pubDate = new DateTime( jsonObject.getString("pub_date") );
+            }
 
             if (multimedia.length() > 0) {
                 JSONObject multimediaJson = multimedia.getJSONObject(0);

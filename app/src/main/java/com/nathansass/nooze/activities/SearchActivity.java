@@ -234,12 +234,14 @@ public class SearchActivity extends AppCompatActivity {
             params.put("sort", settings.sortBy);
         }
 
+        articles.clear();
+        adapter.notifyDataSetChanged();
         client.get(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 JSONArray jsonArticleResults = null;
                 try {
-                    articles.clear();
+//                    articles.clear();
                     jsonArticleResults = response.getJSONObject("response").getJSONArray("docs");
 
                     ArrayList<Article> newArticles = Article.fromJsonArray(jsonArticleResults);

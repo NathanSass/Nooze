@@ -33,5 +33,4 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     compile 'com.android.support:recyclerview-v7:23.2.1'
     compile 'joda-time:joda-time:2.9.4'
-
 }

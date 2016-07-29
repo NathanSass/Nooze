@@ -47,6 +47,10 @@ public class SearchActivity extends AppCompatActivity {
     int page = 1;
     String query = "";
 
+
+    Menu menu;
+    SearchView searchView;
+
     private final int REQUEST_CODE = 99;
 
     @Override
@@ -80,8 +84,9 @@ public class SearchActivity extends AppCompatActivity {
         articleRecycler.addOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
+                resetSearchArea();
                 onArticleEndlessSearch();
-                Toast.makeText(getApplication(), "load page: " + page, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplication(), "load page: " + page, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -89,6 +94,9 @@ public class SearchActivity extends AppCompatActivity {
                 new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+
+                        resetSearchArea();
+
                         Intent i = new Intent( getApplicationContext(), ArticleActivity.class );
 
                         Article article = articles.get(position);
@@ -106,9 +114,11 @@ public class SearchActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_search, menu);
 
+        this.menu = menu;
+
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -225,10 +235,23 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+    private void resetSearchArea() {
+
+        //Why didn't these work
+//        searchView.clearFocus();
+//        searchView.clear
+//        MenuItem searchItem = menu.findItem(R.id.action_search);
+//        searchItem.collapseActionView();
+
+        searchView.setQuery("",false);
+        searchView.setIconified(true);
+    }
+
     public void onArticleSearch(String query) {
         this.query = query;
         onArticleSearch();
     }
+
     public void onArticleSearch() { // What if I just want to call this
         AsyncHttpClient client = new AsyncHttpClient();
         String url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";

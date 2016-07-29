@@ -19,6 +19,14 @@
         <item name="android:background">@color/buttonBackground</item>
     </style>
 
+    <style name="ToolbarCategories">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">30dp</item>
+        <item name="android:textColor">@color/buttonBackground</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>

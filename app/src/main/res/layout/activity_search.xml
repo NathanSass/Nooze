@@ -32,6 +32,80 @@
                 />
         </android.support.v7.widget.Toolbar>
 
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:scrollbars="none"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="8dp"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+                    <TextView
+                        style="@style/ToolbarCategories"
+                        android:text="Adventure Sports"
+                        android:id="@+id/adventureSports"/>
+                    <TextView
+                        style="@style/ToolbarCategories"
+                        android:id="@+id/arts"
+                        android:text="Arts"/>
+                    <TextView
+                        style="@style/ToolbarCategories"
+                        android:id="@+id/business"
+                        android:text="Business"/>
+                    <TextView
+                        style="@style/ToolbarCategories"
+                        android:id="@+id/entrepreneurs"
+                        android:text="Entrepreneurs"/>
+                    <TextView
+                        style="@style/ToolbarCategories"
+                        android:id="@+id/environment"
+                        android:text="Environment"/>
+
+                    <TextView
+                        style="@style/ToolbarCategories"
+                        android:text="Fashion"
+                        android:id="@+id/fashion"/>
+                    <TextView
+                        style="@style/ToolbarCategories"
+                        android:id="@+id/financial"
+                        android:text="Financial"/>
+                    <TextView
+                        style="@style/ToolbarCategories"
+                        android:id="@+id/food"
+                        android:text="Food"/>
+                    <TextView
+                        style="@style/ToolbarCategories"
+                        android:id="@+id/health"
+                        android:text="Health"/>
+                    <TextView
+                        style="@style/ToolbarCategories"
+                        android:id="@+id/sports"
+                        android:text="Sports"/>
+                    <TextView
+                        style="@style/ToolbarCategories"
+                        android:id="@+id/style"
+                        android:text="Style"/>
+                    <TextView
+                        style="@style/ToolbarCategories"
+                        android:text="Technology"
+                        android:id="@+id/technology" />
+                    <TextView
+                        style="@style/ToolbarCategories"
+                        android:id="@+id/us"
+                        android:text="U.S."/>
+                    <TextView
+                        style="@style/ToolbarCategories"
+                        android:id="@+id/wealth"
+                        android:text="Wealth"/>
+                    <TextView
+                        style="@style/ToolbarCategories"
+                        android:id="@+id/world"
+                        android:text="World"/>
+                </LinearLayout>
+            </HorizontalScrollView>
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_search"/>

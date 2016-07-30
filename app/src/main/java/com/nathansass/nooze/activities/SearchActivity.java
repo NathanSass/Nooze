@@ -93,6 +93,10 @@ public class SearchActivity extends AppCompatActivity {
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         articleRecycler.setLayoutManager(gridLayoutManager);
 
+//        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(context, R.dimen.item_offset);
+//        articleRecycler.addItemDecoration(itemDecoration);
+
+
         articleRecycler.addOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {

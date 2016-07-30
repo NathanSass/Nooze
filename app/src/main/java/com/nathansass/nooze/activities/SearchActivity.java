@@ -22,7 +22,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nathansass.nooze.R;
-import com.nathansass.nooze.adapters.ArticleArrayAdapter;
+import com.nathansass.nooze.adapters.ArticleRecyclerAdapter;
 import com.nathansass.nooze.models.Article;
 import com.nathansass.nooze.models.Settings;
 import com.nathansass.nooze.util.EndlessRecyclerViewScrollListener;
@@ -44,7 +44,7 @@ public class SearchActivity extends AppCompatActivity {
     Context context;
 
     ArrayList<Article> articles;
-    ArticleArrayAdapter adapter;
+    ArticleRecyclerAdapter adapter;
 
     Settings settings;
 
@@ -87,7 +87,7 @@ public class SearchActivity extends AppCompatActivity {
 
         articles = new ArrayList<>();
 
-        adapter = new ArticleArrayAdapter(this, articles);
+        adapter = new ArticleRecyclerAdapter(this, articles);
         articleRecycler.setAdapter(adapter);
 
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);

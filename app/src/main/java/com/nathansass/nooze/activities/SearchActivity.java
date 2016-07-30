@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
@@ -55,6 +57,9 @@ public class SearchActivity extends AppCompatActivity {
     Menu menu;
     SearchView searchView;
     TextView selectCategory; // this holds the previously clicked category
+
+    @BindView(R.id.horizontalScrollView)
+    HorizontalScrollView horizontalScrollView;
 
     private final int REQUEST_CODE = 99;
 
@@ -119,6 +124,11 @@ public class SearchActivity extends AppCompatActivity {
     public void onCategoryClick(View view) {
         TextView tvClicked = (TextView) view;
         String category = (String) tvClicked.getText();
+
+        int containerWidth = horizontalScrollView.getWidth() / 2;
+        int tvWidth = tvClicked.getWidth() / 2;
+
+        horizontalScrollView.smoothScrollTo(tvClicked.getLeft() - containerWidth + tvWidth , 0);
 
         if (settings.newsCategories.contains(category)) {
             // change color back to regular color and remove it from array

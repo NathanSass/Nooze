@@ -3,6 +3,7 @@ package com.nathansass.nooze.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -31,6 +33,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 
 public class SearchActivity extends AppCompatActivity {
@@ -50,6 +54,7 @@ public class SearchActivity extends AppCompatActivity {
 
     Menu menu;
     SearchView searchView;
+    TextView selectCategory; // this holds the previously clicked category
 
     private final int REQUEST_CODE = 99;
 
@@ -57,6 +62,8 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -86,7 +93,6 @@ public class SearchActivity extends AppCompatActivity {
             public void onLoadMore(int page, int totalItemsCount) {
                 resetSearchArea();
                 onArticleEndlessSearch();
-//                Toast.makeText(getApplication(), "load page: " + page, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -109,6 +115,37 @@ public class SearchActivity extends AppCompatActivity {
         );
     }
 
+    @OnClick({ R.id.adventureSports, R.id.arts, R.id.business, R.id.entrepreneurs, R.id.environment, R.id.fashion, R.id.financial, R.id.food, R.id.health, R.id.sports, R.id.style, R.id.technology, R.id.us, R.id.wealth, R.id.world })
+    public void onCategoryClick(View view) {
+        TextView tvClicked = (TextView) view;
+        String category = (String) tvClicked.getText();
+
+        if (settings.newsCategories.contains(category)) {
+            // change color back to regular color and remove it from array
+            settings.newsCategories.clear();
+            tvClicked.setTextColor( ContextCompat.getColor(context, R.color.buttonBackground) );
+        } else {
+            // highlight the item selected, remove color from old item
+            settings.newsCategories.clear();
+
+            if (selectCategory != null) { // if there is a previously selected value
+                selectCategory.setTextColor( ContextCompat.getColor(context, R.color.buttonBackground) );
+            }
+
+            tvClicked.setTextColor( ContextCompat.getColor(context, R.color.colorAccent) );
+            settings.newsCategories.add(category);
+
+            selectCategory = tvClicked;
+
+        }
+
+        // clear any existing queries
+        onArticleSearch("");
+
+
+//        Toast.makeText(getApplication(), "item clicked: " + category, Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -122,7 +159,14 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
                 searchView.clearFocus();
+
+                if (selectCategory != null) { // if there is a previously selected value
+                    selectCategory.setTextColor( ContextCompat.getColor(context, R.color.buttonBackground) );
+                    settings.newsCategories.remove( selectCategory.getText() ); // BUGBUG: will remove from settings if also chosen there, relying on the fact there are so many more options to choose from in the main search
+                }
+
                 onArticleSearch(query);
 
                 return false;

@@ -46,6 +46,7 @@
                     <TextView
                         style="@style/ToolbarCategories"
                         android:text="Adventure Sports"
+                        android:tag="Adventure Sports"
                         android:id="@+id/adventureSports"/>
                     <TextView
                         style="@style/ToolbarCategories"

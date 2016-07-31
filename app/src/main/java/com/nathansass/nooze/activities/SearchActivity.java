@@ -31,6 +31,7 @@ import com.nathansass.nooze.util.ItemClickSupport;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -127,7 +128,7 @@ public class SearchActivity extends AppCompatActivity {
 
                         Article article = articles.get(position);
 
-                        i.putExtra("article", article);
+                        i.putExtra("article", Parcels.wrap(article));
 
                         startActivity(i);
                     }

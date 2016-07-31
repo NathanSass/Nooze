@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.nathansass.nooze.R;
 import com.nathansass.nooze.models.Article;
 
+import org.parceler.Parcels;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -35,7 +37,7 @@ public class ArticleActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        article = (Article) getIntent().getSerializableExtra("article");
+        article = Parcels.unwrap(getIntent().getParcelableExtra("article"));
 
         toolbarTitle.setText(article.getHeadline());
 

@@ -42,71 +42,71 @@
                 android:layout_marginBottom="8dp"
                 android:layout_height="match_parent">
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
                     <TextView
                         style="@style/ToolbarCategories"
-                        android:text="Adventure Sports"
+                        android:text="@string/adventure_sports"
                         android:tag="Adventure Sports"
                         android:id="@+id/adventureSports"/>
                     <TextView
                         style="@style/ToolbarCategories"
                         android:id="@+id/arts"
-                        android:text="Arts"/>
+                        android:text="@string/arts"/>
                     <TextView
                         style="@style/ToolbarCategories"
                         android:id="@+id/business"
-                        android:text="Business"/>
+                        android:text="@string/business"/>
                     <TextView
                         style="@style/ToolbarCategories"
                         android:id="@+id/entrepreneurs"
-                        android:text="Entrepreneurs"/>
+                        android:text="@string/entrepreneurs"/>
                     <TextView
                         style="@style/ToolbarCategories"
                         android:id="@+id/environment"
-                        android:text="Environment"/>
+                        android:text="@string/environment"/>
 
                     <TextView
                         style="@style/ToolbarCategories"
-                        android:text="Fashion"
+                        android:text="@string/fashion"
                         android:id="@+id/fashion"/>
                     <TextView
                         style="@style/ToolbarCategories"
                         android:id="@+id/financial"
-                        android:text="Financial"/>
+                        android:text="@string/financial"/>
                     <TextView
                         style="@style/ToolbarCategories"
                         android:id="@+id/food"
-                        android:text="Food"/>
+                        android:text="@string/food"/>
                     <TextView
                         style="@style/ToolbarCategories"
                         android:id="@+id/health"
-                        android:text="Health"/>
+                        android:text="@string/health"/>
                     <TextView
                         style="@style/ToolbarCategories"
                         android:id="@+id/sports"
-                        android:text="Sports"/>
+                        android:text="@string/sports"/>
                     <TextView
                         style="@style/ToolbarCategories"
                         android:id="@+id/style"
-                        android:text="Style"/>
+                        android:text="@string/style"/>
                     <TextView
                         style="@style/ToolbarCategories"
-                        android:text="Technology"
+                        android:text="@string/technology"
                         android:id="@+id/technology" />
                     <TextView
                         style="@style/ToolbarCategories"
                         android:id="@+id/us"
-                        android:text="U.S."/>
+                        android:text="@string/u_s"/>
                     <TextView
                         style="@style/ToolbarCategories"
                         android:id="@+id/wealth"
-                        android:text="Wealth"/>
+                        android:text="@string/wealth"/>
                     <TextView
                         style="@style/ToolbarCategories"
                         android:id="@+id/world"
-                        android:text="World"/>
+                        android:text="@string/world"/>
                 </LinearLayout>
             </HorizontalScrollView>
     </android.support.design.widget.AppBarLayout>

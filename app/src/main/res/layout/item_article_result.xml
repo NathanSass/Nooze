@@ -28,38 +28,13 @@
         android:text="TextView"
         android:fontFamily="sans-serif-light"/>
 
-    <LinearLayout
-        android:layout_below="@id/tvTitle"
-        android:layout_marginLeft="@dimen/item_content_offset"
-        android:layout_marginRight="@dimen/item_content_offset"
-        android:layout_marginBottom="@dimen/item_content_offset"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="2dp">
-
-
-        <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="1dp"
-            android:id="@+id/clockIcon"
-            android:src="@drawable/ic_alarm_grey_12px"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="8"
-            android:id="@+id/tvDaysOld"
-            android:textSize="10sp"
-            android:fontFamily="sans-serif"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" Days"
-            android:textSize="10sp"
-            android:fontFamily="sans-serif"/>
-    </LinearLayout>
+    <include
+        layout="@layout/partial_days_remaining"
+         android:layout_below="@+id/tvTitle"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="@dimen/item_content_offset"
+         android:layout_marginRight="@dimen/item_content_offset"
+         android:layout_marginBottom="@dimen/item_content_offset"
+         android:layout_width="match_parent"/>
 
 </RelativeLayout>

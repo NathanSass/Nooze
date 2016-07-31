@@ -3,34 +3,42 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="110dp"
     android:layout_marginBottom="8dp"
-    android:background="@color/buttonBackground"
+    android:background="@color/tileBackground"
     android:layout_height="wrap_content">
-
-    <!--<ImageView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="80dp"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:scaleType="fitStart"-->
-        <!--android:src="@mipmap/ic_launcher"-->
-        <!--android:id="@+id/ivImage"/>-->
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/item_content_offset"
         android:layout_marginLeft="@dimen/item_content_offset"
         android:layout_marginRight="@dimen/item_content_offset"
+        android:layout_marginBottom="@dimen/item_content_offset"
         android:id="@+id/tvTitle"
         android:maxLines="3"
-        android:textSize="10dp"
+        android:textSize="14sp"
+        android:ellipsize="end"
+        android:text="TextView"
+        android:fontFamily="sans-serif"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/item_content_offset"
+        android:layout_marginRight="@dimen/item_content_offset"
+        android:id="@+id/tvSnippet"
+        android:layout_below="@id/tvTitle"
+        android:maxLines="5"
+        android:textSize="12sp"
         android:ellipsize="end"
         android:text="TextView"
         android:fontFamily="sans-serif-light"/>
 
     <LinearLayout
-        android:layout_below="@id/tvTitle"
+        android:layout_below="@id/tvSnippet"
         android:layout_marginLeft="@dimen/item_content_offset"
         android:layout_marginRight="@dimen/item_content_offset"
+        android:layout_marginBottom="@dimen/item_content_offset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -50,13 +58,13 @@
             android:layout_height="wrap_content"
             android:text="8"
             android:id="@+id/tvDaysOld"
-            android:textSize="10dp"
+            android:textSize="10sp"
             android:fontFamily="sans-serif"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" Days"
-            android:textSize="10dp"
+            android:textSize="10sp"
             android:fontFamily="sans-serif"/>
     </LinearLayout>
 

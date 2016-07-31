@@ -60,6 +60,8 @@ public class SearchActivity extends AppCompatActivity {
 
     @BindView(R.id.horizontalScrollView)
     HorizontalScrollView horizontalScrollView;
+    @BindView(R.id.adventureSports)
+    TextView adventureCategory;
 
     private final int REQUEST_CODE = 99;
 
@@ -78,6 +80,15 @@ public class SearchActivity extends AppCompatActivity {
 
         setUpViews();
 
+        setFirstSearch();
+
+    }
+
+    public void setFirstSearch() {
+        selectCategory = adventureCategory;
+        settings.newsCategories.add((String) adventureCategory.getText());
+        adventureCategory.setTextColor( ContextCompat.getColor(context, R.color.colorAccent) );
+        onArticleSearch("");
     }
 
     public void setUpViews() {

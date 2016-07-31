@@ -11,10 +11,11 @@ import com.nathansass.nooze.R;
  */
 public class ItemArticleNoImageResult extends RecyclerView.ViewHolder {
 
-    TextView tvTitle, tvDaysOld;
+    TextView tvTitle, tvDaysOld, tvSnippet;
     public ItemArticleNoImageResult(View view) {
         super(view);
         tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         tvDaysOld = (TextView) view.findViewById(R.id.tvDaysOld);
+        tvSnippet = (TextView) view.findViewById(R.id.tvSnippet);
     }
 }

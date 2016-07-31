@@ -135,8 +135,9 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private void configureNoImageViewHolder(ItemArticleNoImageResult vhNoImage, int position) {
         Article article = articles.get(position);
         if (article != null) {
-            vhNoImage.tvTitle.setText(article.getHeadline());
-            vhNoImage.tvDaysOld.setText(article.getAgeOfArticleInDays());
+            vhNoImage.tvTitle.setText( article.getHeadline() );
+            vhNoImage.tvDaysOld.setText( article.getAgeOfArticleInDays() );
+            vhNoImage.tvSnippet.setText( article.getSnippet() );
         }
     }
 

@@ -12,7 +12,11 @@ import java.util.ArrayList;
  * Created by nathansass on 7/25/16.
  */
 public class Article implements Serializable {
-    String webUrl, headline, thumbNail;
+    String webUrl;
+    String headline;
+    String thumbNail;
+
+    String snippet;
 
     DateTime pubDate;
 
@@ -20,6 +24,7 @@ public class Article implements Serializable {
         try {
             this.webUrl = jsonObject.getString("web_url");
             this.headline = jsonObject.getJSONObject("headline").getString("main");
+            this.snippet = jsonObject.getString("snippet");
             JSONArray multimedia = jsonObject.getJSONArray("multimedia");
 
             String dateString = jsonObject.getString("pub_date");
@@ -65,6 +70,10 @@ public class Article implements Serializable {
 
     public String getThumbNail() {
         return thumbNail;
+    }
+
+    public String getSnippet() {
+        return snippet;
     }
 
     public String getPubDate() {

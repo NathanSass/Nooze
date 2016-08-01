@@ -12,13 +12,13 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:background="@drawable/toolbar_side_gradient">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <TextView
@@ -26,7 +26,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
-                android:fontFamily="sans-serif-light"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-bold"
                 android:textColor="@android:color/white"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_gravity="center"

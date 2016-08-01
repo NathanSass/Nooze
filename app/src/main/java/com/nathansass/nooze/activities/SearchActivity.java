@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.HorizontalScrollView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import com.nathansass.nooze.models.Article;
 import com.nathansass.nooze.models.Settings;
 import com.nathansass.nooze.util.EndlessRecyclerViewScrollListener;
 import com.nathansass.nooze.util.ItemClickSupport;
+import com.nathansass.nooze.util.OnSwipeTouchListener;
 import com.nathansass.nooze.util.SpacesItemDecoration;
 
 import org.json.JSONArray;
@@ -64,6 +66,8 @@ public class SearchActivity extends AppCompatActivity {
     HorizontalScrollView horizontalScrollView;
     @BindView(R.id.adventureSports)
     TextView adventureCategory;
+    @BindView(R.id.articlesContainer)
+    RelativeLayout articlesCountainer;
 
     private final int REQUEST_CODE = 99;
 
@@ -86,8 +90,21 @@ public class SearchActivity extends AppCompatActivity {
 
         setUpViews();
 
+        setSwipeListener();
+
         setFirstSearch();
 
+    }
+
+    public void setSwipeListener() {
+        articlesCountainer.setOnTouchListener( new OnSwipeTouchListener(SearchActivity.this) {
+            public void onSwipeRight() {
+                Toast.makeText(SearchActivity.this, "right", Toast.LENGTH_SHORT).show();
+            }
+            public void onSwipeLeft() {
+                Toast.makeText(SearchActivity.this, "left", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void setFirstSearch() {

@@ -27,6 +27,7 @@ import com.nathansass.nooze.models.Article;
 import com.nathansass.nooze.models.Settings;
 import com.nathansass.nooze.util.EndlessRecyclerViewScrollListener;
 import com.nathansass.nooze.util.ItemClickSupport;
+import com.nathansass.nooze.util.SpacesItemDecoration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -106,12 +107,11 @@ public class SearchActivity extends AppCompatActivity {
         adapter = new ArticleRecyclerAdapter(this, articles);
         articleRecycler.setAdapter(adapter);
 
-        StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         articleRecycler.setLayoutManager(gridLayoutManager);
 
-//        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(context, R.dimen.item_offset);
-//        articleRecycler.addItemDecoration(itemDecoration);
-
+        SpacesItemDecoration decoration = new SpacesItemDecoration(16);
+        articleRecycler.addItemDecoration(decoration);
 
         articleRecycler.addOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override

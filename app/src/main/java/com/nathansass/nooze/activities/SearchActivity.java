@@ -110,7 +110,7 @@ public class SearchActivity extends AppCompatActivity {
         StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         articleRecycler.setLayoutManager(gridLayoutManager);
 
-        SpacesItemDecoration decoration = new SpacesItemDecoration(16);
+        SpacesItemDecoration decoration = new SpacesItemDecoration(8);
         articleRecycler.addItemDecoration(decoration);
 
         articleRecycler.addOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {

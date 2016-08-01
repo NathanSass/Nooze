@@ -4,5 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="item_offset">1dp</dimen>
-    <dimen name="item_content_offset">4dp</dimen>
+    <dimen name="item_content_offset">10dp</dimen>
+    <dimen name="days_left_top_margin">4dp</dimen>
 </resources>

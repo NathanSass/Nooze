@@ -12,7 +12,7 @@
         android:layout_marginTop="@dimen/item_content_offset"
         android:layout_marginLeft="@dimen/item_content_offset"
         android:layout_marginRight="@dimen/item_content_offset"
-        android:layout_marginBottom="@dimen/item_content_offset"
+        android:layout_marginBottom="6dp"
         android:id="@+id/tvTitle"
         android:maxLines="3"
         android:textSize="14sp"
@@ -40,6 +40,7 @@
         android:layout_marginLeft="@dimen/item_content_offset"
         android:layout_marginRight="@dimen/item_content_offset"
         android:layout_marginBottom="@dimen/item_content_offset"
+        android:layout_marginTop="@dimen/days_left_top_margin"
         android:layout_width="match_parent"/>
 
 </RelativeLayout>

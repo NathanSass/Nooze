@@ -2,13 +2,9 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_marginLeft="@dimen/item_content_offset"
-    android:layout_marginRight="@dimen/item_content_offset"
-    android:layout_marginBottom="@dimen/item_content_offset"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginTop="2dp">
+    android:orientation="horizontal">
 
 
     <ImageView
@@ -25,11 +21,11 @@
         android:text="8"
         android:id="@+id/tvDaysOld"
         android:textSize="10sp"
-        android:fontFamily="sans-serif"/>
+        android:fontFamily="sans-serif-light"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" Days"
         android:textSize="10sp"
-        android:fontFamily="sans-serif"/>
+        android:fontFamily="sans-serif-light"/>
 </LinearLayout>

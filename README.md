@@ -44,7 +44,8 @@ The following **bonus** features are implemented:
 The following **additional** features are implemented:
 
 * [x] Used [animations](https://guides.codepath.com/android/Animations#activity-transitions) to open the search settings activity
-* [x] Automatically scrolls to certain positions in a horizontally scroll.
+* [x] In the category selector up top, it automatically scrolls them to center when clicked.
+* [x] Custom launcher icon.
 
 ## Video Walkthrough
 
